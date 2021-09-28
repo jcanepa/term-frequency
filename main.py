@@ -1,25 +1,29 @@
-# A program that preforms term frequency on its input.
+# A program that performs term frequency on its input.
 
-import string
+import re
 from collections import Counter
 
 def main():
-    # load and format main text file into a list without punctuation (FIXME)
-    words = open('input/neuromancer.txt').read().lower().translate(str.maketrans('', '', string.punctuation)).split()
+    # load and format main text file
+    # remove all punctuation with a regular expression
+    # convert values into a list
+    words = open('input/neuromancer.txt').read().lower()
+    words = re.sub(r'[^\w\s]', '', words).split()
 
-    # load stop words from text file, and convert into a list
-    stop_words = open(
-        'input/stop_words.txt').read().split(',')
+    # load stop words from a text file,
+    # convert its values into a list
+    stop_words = open('input/stop_words.txt').read().split(',')
 
-    # remove all stop words from the collection
+    # remove stop words from the main collection
     filtered_words = filter(
         lambda word: word not in stop_words,
         words)
 
-    # create a dictionary where key=term and value=count
+    # count occurances of each unique term
+    # dictionary where key=term and value=count
     counted = Counter(filtered_words)
 
-    # order the dictionary by count value, desc
+    # order the dictionary by desc value (count)
     ordered = dict(sorted(
         counted.items(),
         key = lambda item: item[1],
