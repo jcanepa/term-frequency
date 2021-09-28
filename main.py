@@ -1,14 +1,27 @@
 # A program that performs term frequency on its input.
 
-def main():
-    # PART A - LOAD FILE INPUT
-    # Load a text file
-    file = open('file.txt')
-    # Load a file containing a comma-separated list of stop words to ignore, like "the," "for", etc.
-    stop_words = open('stop-words.txt').read()
+import string
 
-    # PART B - COLLECT EXCLUDE LIST
-    # Convert stop words into a collection data type
+class FileInput:
+    def __init__(self):
+        pass
+
+
+def main():
+    # Load a text file and a comma-separated list of stop words to ignore, like "the," "for", etc.
+    file = open('input/text.txt').read()
+    # Prepare file by removing punctuation
+    punctuation = str.maketrans('', '', string.punctuation)
+    words = file.translate(punctuation)
+    # collect
+    l = words.split()
+
+    # Step 2 - Collect stop words
+    stop_words = open('input/stop_words.txt').read()
+    exclude = stop_words.split(',')
+
+    for word in l:
+        print(word)
 
     # PART C - ITERATION, FILTERING, COLLECTING
     # Iterate through the english text file
@@ -21,7 +34,6 @@ def main():
     # display the 25 most frequent words and their corresponding frequencies,
     # ordered by decreasing value of frequency (most frequent is first).
     # Don't worry about the order of words that have equivalent frequencies.
-    pass
 
 
 if __name__ == '__main__':
