@@ -1,39 +1,41 @@
-# A program that performs term frequency on its input.
+# A program that preforms term frequency on its input.
 
 import string
-
-class FileInput:
-    def __init__(self):
-        pass
-
+from collections import Counter
 
 def main():
-    # Load a text file and a comma-separated list of stop words to ignore, like "the," "for", etc.
-    file = open('input/text.txt').read()
-    # Prepare file by removing punctuation
-    punctuation = str.maketrans('', '', string.punctuation)
-    words = file.translate(punctuation)
-    # collect
-    l = words.split()
+    # load and format main text file into a list without punctuation (FIXME)
+    words = open('input/neuromancer.txt').read().lower().translate(str.maketrans('', '', string.punctuation)).split()
 
-    # Step 2 - Collect stop words
-    stop_words = open('input/stop_words.txt').read()
-    exclude = stop_words.split(',')
+    # load stop words from text file, and convert into a list
+    stop_words = open(
+        'input/stop_words.txt').read().split(',')
 
-    for word in l:
-        print(word)
+    # remove all stop words from the collection
+    filtered_words = filter(
+        lambda word: word not in stop_words,
+        words)
 
-    # PART C - ITERATION, FILTERING, COLLECTING
-    # Iterate through the english text file
-    # add the lowercase version of all non-stop, non-punctuation strings
-    # into a 25-item collection
-    #
-    # # Make sure your program normalizes for capitalization (eg "zebra" and "Zebra" both count as just "zebra").
+    # create a dictionary where key=term and value=count
+    counted = Counter(filtered_words)
 
-    # PART D - SHOW RESULTS
-    # display the 25 most frequent words and their corresponding frequencies,
-    # ordered by decreasing value of frequency (most frequent is first).
-    # Don't worry about the order of words that have equivalent frequencies.
+    # order the dictionary by count value, desc
+    ordered = dict(sorted(
+        counted.items(),
+        key = lambda item: item[1],
+        reverse=True))
+
+    # list out the 25 most frequent terms
+    rank = 1
+    for term, frequency in ordered.items():
+
+        print(
+            str(rank) +'. '+
+            term +' - '+
+            str(frequency))
+
+        if (rank == 25): break
+        rank += 1
 
 
 if __name__ == '__main__':
