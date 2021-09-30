@@ -1,13 +1,13 @@
 # A program that performs term frequency on its input.
 
-import re
+import re as regex
 from collections import Counter
 
 def main():
     # load and format main text file
     # then remove all punctuation with a regular expression and add values to a list
     words = open('input/neuromancer.txt').read().lower()
-    words = re.sub(r'[^\w\s]', '', words).split()
+    words = regex.sub(r'[^\w\s]', '', words).split()
 
     # load stop words from a text file,
     # convert its values into a list
