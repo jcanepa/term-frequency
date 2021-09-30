@@ -5,8 +5,7 @@ from collections import Counter
 
 def main():
     # load and format main text file
-    # remove all punctuation with a regular expression
-    # convert values into a list
+    # then remove all punctuation with a regular expression and add values to a list
     words = open('input/neuromancer.txt').read().lower()
     words = re.sub(r'[^\w\s]', '', words).split()
 
@@ -20,19 +19,18 @@ def main():
         words)
 
     # count occurances of each unique term
-    # dictionary where key=term and value=count
+    # results in dictionary where key=term and value=count
     counted = Counter(filtered_words)
 
-    # order the dictionary by desc value (count)
-    ordered = dict(sorted(
+    # sort the dictionary by desc value (count)
+    sorted_by_frequency = dict(sorted(
         counted.items(),
         key = lambda item: item[1],
         reverse=True))
 
     # list out the 25 most frequent terms
     rank = 1
-    for term, frequency in ordered.items():
-
+    for term, frequency in sorted_by_frequency.items():
         print(
             str(rank) +'. '+
             term +' - '+
